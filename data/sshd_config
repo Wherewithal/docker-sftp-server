@@ -22,7 +22,7 @@ UsePAM yes
 
 PrintMotd no
 
-AuthorizedKeysCommand /get-keys.sh
+AuthorizedKeysCommand /opt/bin/get-keys.sh
 AuthorizedKeysCommandUser root
 
 SyslogFacility AUTH

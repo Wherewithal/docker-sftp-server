@@ -46,7 +46,7 @@ docker build -t 42technologies/sftp docker-sftp-server
 # ./sftp-passwd.sh /opt/sftp jacobmarks
 
 # connecting to the sftp server
-sftp -i ./sftp/sftp.key -P 9000 42-data@localhost
+sftp -i ./sftp/sftp.key -P 9000 wherewithal@localhost
 
 # ... after put-ing files in the SFTP server, you can access them here
 ls ./sftp/data/jacobmarks/data
@@ -94,7 +94,7 @@ Let's create an sftp container for organization `jacobmarks` that will run on po
 ```
 
 This creates a container that exposes it's SSH server via port `10000`. You
-SFTP into the server by using `42-data` as the username, and port `10000`.
+SFTP into the server by using `wherewithal` as the username, and port `10000`.
 
 The `sftp-run.sh` script will create the directory `<root>/data/jacobmarks`.
 
@@ -131,7 +131,7 @@ If you want to use password-based authentication, you can use the `sftp-passwd.s
 On some random machine, you can connect to the SFTP server by doing:
 
 ```
-sftp -i <private key> -P <port> 42-data@<host>
+sftp -i <private key> -P <port> wherewithal@<host>
 ```
 
 Note that the private key is not necessary if you have set a password.
@@ -143,7 +143,7 @@ Note that the private key is not necessary if you have set a password.
 
 ## Inside the SFTP server
 
-As mentioned previously, each container only creates a single SFTP user: `42-data`. To "switch" accounts,
+As mentioned previously, each container only creates a single SFTP user: `wherewithal`. To "switch" accounts,
 you just connect to a different SFTP server (aka use a different port).
 
 The SFTP user will have full control over files in `/keys` and `/data`. The are however unable to delete

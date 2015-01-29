@@ -30,4 +30,4 @@ docker run -d \
 -v $root/data/$organization:/sftp \
 -v $root/keys:/keys \
 --name sftp.$organization \
-42technologies/sftp
+wherewithal/sftp

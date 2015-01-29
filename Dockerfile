@@ -1,27 +1,31 @@
-FROM ubuntu:14.04
+FROM phusion/baseimage:0.9.15
+CMD ["/sbin/my_init"]
 
-MAINTAINER Nicolas Porter <nick@42technologies.com>
+MAINTAINER Ho-Sheng Hsiao <hosh@getwherewithal.com>
 
 # RUN sed -i 's/trusty/vivid/g' /etc/apt/sources.list
 # RUN echo nameserver 8.8.8.8 > /etc/resolv.conf
 RUN apt-get update && apt-get install -y openssh-server
-RUN mkdir /var/run/sshd
+# phusion/baseimage already has this
+# RUN mkdir /var/run/sshd
 RUN groupadd sftpusers
-RUN useradd --shell /sbin/nologin --home-dir /sftp --no-create-home -G sftpusers 42-data
+RUN useradd --shell /sbin/nologin --home-dir /sftp --no-create-home -G sftpusers wherewithal
 RUN mkdir -p /sftp
 
+# Custom sshd_config to run different organizations
 ADD ./data/sshd_config /etc/ssh/sshd_config
-ADD ./data/sshd.conf   /etc/rsyslog.d/sshd.conf
-ADD ./data/get-keys.sh /get-keys.sh
-ADD ./data/sftp.sh     /sftp.sh
 ADD ./data/readme.txt  /sftp/readme.txt
+#ADD ./data/sshd.conf   /etc/rsyslog.d/sshd.conf
 
-RUN chmod +x /sftp.sh
-RUN chmod +x /get-keys.sh
+RUN mkdir -p /etc/service/openssh
+ADD ./data/sftp.sh     /etc/service/openssh/run
+RUN chmod +x /etc/service/openssh/run
+
+RUN mkdir -p /opt/bin
+ADD ./data/get-keys.sh /opt/bin/get-keys.sh
+RUN chmod +x /opt/bin/get-keys.sh
 
 VOLUME /etc
 VOLUME /sftp
 
 EXPOSE 22
-
-CMD ["/sftp.sh"]
