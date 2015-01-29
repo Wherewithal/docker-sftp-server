@@ -22,6 +22,6 @@ organization=$2
 ls $root/data/$organization > /dev/null
 
 docker run -it \
---volumes-from sftp.$organization \
-42technologies/sftp \
-passwd 42-data
+  --volumes-from sftp.$organization \
+  wherewithal/sftp \
+  passwd wherewithal

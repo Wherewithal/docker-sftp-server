@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y openssh-server
 # RUN mkdir /var/run/sshd
 RUN groupadd sftpusers
 RUN useradd --shell /sbin/nologin --home-dir /sftp --no-create-home -G sftpusers wherewithal
-RUN mkdir -p /sftp
+RUN mkdir -p /sftp /opt/local/keys
 
 # Custom sshd_config to run different organizations
 ADD ./data/sshd_config /etc/ssh/sshd_config
@@ -27,5 +27,6 @@ RUN chmod +x /opt/bin/get-keys.sh
 
 VOLUME /etc
 VOLUME /sftp
+VOLUME /opt/local/keys
 
 EXPOSE 22
